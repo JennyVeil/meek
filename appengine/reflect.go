@@ -1,6 +1,6 @@
 // A web app for Google App Engine that proxies HTTP requests and responses to a
 // Tor relay running meek-server.
-package reflect
+package main
 
 import (
 	"io"
@@ -62,7 +62,7 @@ func copyRequest(r *http.Request) (*http.Request, error) {
 	return c, nil
 }
 
-func handler(w http.ResponseWriter, r *http.Request) {
+func main(w http.ResponseWriter, r *http.Request) {
 	context = appengine.NewContext(r)
 	fr, err := copyRequest(r)
 	if err != nil {
@@ -100,5 +100,5 @@ func handler(w http.ResponseWriter, r *http.Request) {
 }
 
 func init() {
-	http.HandleFunc("/", handler)
+	http.HandleFunc("/", main)
 }
